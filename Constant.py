@@ -21,19 +21,29 @@ url_post_request_ref_type = 'https://dsclogistics.mercurygate.net/MercuryGate/ex
 
 url_post_add_ref = 'https://dsclogistics.mercurygate.net/MercuryGate/common/addReference_process.jsp'
 
-
+list_col_name = [
+    'menu_value',
+    'oid',
+    'load_ref',
+    'owner',
+    'shipment_type',
+    'origin_code',
+    'dest_code',
+    'trade_flag',
+    'carrier_mode',
+    'actual_ship'
+]
 re_pattern_csrf = re.compile('\<meta name\=\"_csrf\" content\=\"([\w\-]*)\" \/\>')
-re_pattern_menu_value = re.compile('\<a href\=\"\.\.\/mainframe\/menuLHS\.jsp\?sMenuValue\=([\d\(\)\,]*)'
-                                  '\&sMenuSelected\=\*\-\%3EDetail')
-re_pattern_oid = re.compile('OID\' class\=\"DetailBodyTableRowOdd \"\>([\d]*)\<\/td\>')
-re_pattern_load_ref = re.compile('Load Reference\' class\=\"DetailBodyTableRowOdd \"\>([\d]*) \(Load Number')
-re_pattern_owner = re.compile('Owner\' class\=\"DetailBodyTableRowOdd \"\>([\s\w]*)\<\/td\>')
-re_pattern_shipment_type = re.compile('Shipment Type\' class\=\"DetailBodyTableRowOdd \"\>([\s\w\:\;\#\&]*)\<\/td\>')
-re_pattern_origin_code = re.compile('Origin Code\' class\=\"DetailBodyTableRowOdd \"\>([\w\&\;\s]*)\<\/td\>')
-re_pattern_dest_code = re.compile('Dest Code\' class\=\"DetailBodyTableRowOdd \"\>([\w\&\;\s]*)\<\/td\>')
-re_pattern_trade = re.compile('Trade\' class\=\"DetailBodyTableRowOdd \"\>([\w]*)\<\/td\>')
-re_pattern_carrier_mode = re.compile('Carrier Mode\' class\=\"DetailBodyTableRowOdd \"\>([\w]*)\<\/td\>')
-re_pattern_actual_ship = re.compile('Actual Ship\' class\=\"DetailBodyTableRowOdd \"\>([\w\/\:\s]*)\<\/td\>')
+re_pattern_all_cols = re.compile('sMenuValue\=(\(\d{11}\,\d{4}\,\d{1}\)).*?\<\/td\>\s*'
+                                 '\<td align\=.+?\>(\d{11})\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?) \(.+?\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>\s*'
+                                 '\<td align\=.+?\>(.*?)\<\/td\>')
 re_pattern_url_parse = re.compile('\<script src\=\"([\w\/\.\?\=]*)\" type\=\"text\/javascript\"\>\<\/script\>')
 
 field_origin_code = 'OriginLocation.LocationCode'
@@ -91,19 +101,6 @@ menu_value_ref_type_trade = '(19217908000,3250,0)'
 menu_value_ref_type_subtrade = '(54144713184,3250,0)'
 
 html_equivalence_and = '&amp;'
-
-re_pattern_dict = {
-    'actual_ship': re_pattern_actual_ship,
-    'carrier_mode': re_pattern_carrier_mode,
-    'dest_code': re_pattern_dest_code,
-    'load_ref': re_pattern_load_ref,
-    'menu_value': re_pattern_menu_value,
-    'oid': re_pattern_oid,
-    'origin_code': re_pattern_origin_code,
-    'owner': re_pattern_owner,
-    'trade': re_pattern_trade,
-    'shipment_type': re_pattern_shipment_type
-}
 
 post_data_open_report = {
     '_csrf': '',

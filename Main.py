@@ -18,6 +18,8 @@ if __name__ == '__main__':
     session_requests, csrf = Post_Data.login_tms()
 
     print('Now adding subtrade flags...')
+    print('Check shipment report B&G SubTrade Flag Update for missing required information if the program doesn\'t '
+          'complete within 5 minutes.')
 
     while True:
 
@@ -28,17 +30,11 @@ if __name__ == '__main__':
         html_script = response.text
 
         #GET SHIPMENT DATA
-        data_dict = Get_Data.parse_data(html_script, Constant.re_pattern_dict)
+        data_dict = Get_Data.parse_data(html_script, Constant.re_pattern_all_cols)
 
         # CHECK IF THERE IS ANY SHIPMENT LEFT
         if len(data_dict) == 0:
             break
-
-        assert len(data_dict['origin_code']) == len(data_dict['dest_code']) \
-            and len(data_dict['origin_code']) == len(data_dict['carrier_mode']) \
-            and len(data_dict['origin_code']) == len(data_dict['menu_value']) \
-            and len(data_dict['origin_code']) == len(data_dict['shipment_type']), \
-            'Error: Data elements do not have a same length.'
 
         #ASSIGN SUBTRADE FLAG
         data_dict = Assign_SubTrade_Flag.assign_flag(data_dict)
@@ -62,7 +58,7 @@ if __name__ == '__main__':
     worksheet_log = G_API.get_worksheet_by_id(workbook_log, Constant.g_sheets_worksheet_id_log)
     Post_Data.log_event(worksheet_log, duration)
 
-    time.sleep(10)
+    time.sleep(30)
 
 # save_file = open(Constant.root_path + 'test.html', 'w+')
 # save_file.write(html_script)

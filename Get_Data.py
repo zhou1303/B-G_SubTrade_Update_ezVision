@@ -29,17 +29,18 @@ def get_shipment_report(session_requests, csrf, oid):
     return response
 
 
-def parse_data(html_script, re_pattern_dict):
+def parse_data(html_script, re_pattern):
 
     data_dict = dict()
-    for key, item in re_pattern_dict.items():
-        if item.search(html_script):
-            data_list = item.findall(html_script)
-            #REPLACE HTML EQUIVALENCE TO NORMAL SCRIPT
-            data_list = [d.replace(Constant.html_equivalence_and, '&') for d in data_list]
-            data_dict[key] = data_list
-        else:
-            break
+    data_list = re_pattern.findall(html_script)
+
+    for col_name in Constant.list_col_name:
+        data_dict[col_name] = list()
+    for values in data_list:
+        for i, value in enumerate(values):
+            value = value.replace(Constant.html_equivalence_and, '&')
+            data_dict[Constant.list_col_name[i]].append(value)
+
     return data_dict
 
 
