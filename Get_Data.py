@@ -31,11 +31,12 @@ def get_shipment_report(session_requests, csrf, oid):
 
 def parse_data(html_script, re_pattern):
     data_dict = dict()
-    data_list = re_pattern.findall(html_script)
-    data_list = list(map(list, zip(*data_list)))
+    if re_pattern.search(html_script) is not None:
+        data_list = re_pattern.findall(html_script)
+        data_list = list(map(list, zip(*data_list)))
 
-    for i, value in enumerate(Constant.list_col_name):
-        data_dict[value] = (data_list[i])
+        for i, value in enumerate(Constant.list_col_name):
+            data_dict[value] = (data_list[i])
 
     return data_dict
 
@@ -48,3 +49,9 @@ def read_login_credentials():
     Constant.login_password = login_password.read()
 
     print('User credentials read successfully.')
+
+
+def read_report_oid():
+    report_oid = open('report_oid.txt', mode='r')
+    Constant.oid_subtrade_flag_report = report_oid.read()
+    print('Report OID read successfully.')

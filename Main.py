@@ -14,6 +14,7 @@ if __name__ == '__main__':
     count = 0
 
     #LOGIN TMS
+    Get_Data.read_report_oid()
     Get_Data.read_login_credentials()
     session_requests, csrf = Post_Data.login_tms()
 
