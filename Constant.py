@@ -29,7 +29,7 @@ list_col_name = [
     'shipment_type',
     'origin_code',
     'dest_code',
-    'trade_flag',
+    'subtrade_flag',
     'carrier_mode',
     'actual_ship'
 ]
@@ -125,7 +125,8 @@ post_data_add_ref = {
     'ListCacheKey': '',
     'sidReferenceType1': '',
     'refType1': 'value',
-    'SR541447131841': 'AC',
+    'SR541447131841': None,
+    'sSequence1': '',
     'sContactField1': 'name'
 }
 
