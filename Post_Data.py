@@ -24,7 +24,8 @@ def login_tms():
         Constant.url_tms_login,
         data=login_info,
     )
-
+    # -----------------------------------------------------------------------------------------------------------------
+    # Collect TMS login token for future operations.
     csrf = Constant.re_pattern_csrf.search(response.text).group(1)
     print('Login as', Constant.login_userid, '...')
     print('Login to TMS successfully.')
@@ -33,10 +34,11 @@ def login_tms():
 
 
 def add_ref(session_requests, csrf, obj_menu_value, ref_type_menu_value, ref_value):
-    #CONFIGURE POST DATA DICT
+    # -----------------------------------------------------------------------------------------------------------------
+    # Configure POST data dictionary.
     data_dict = Config_Post_Data.config_add_ref_by_select(csrf, obj_menu_value, ref_type_menu_value, ref_value)
-
-    #SEND POST REQUEST
+    # -----------------------------------------------------------------------------------------------------------------
+    # Send the data dictionary to the given URL, and collect response.
     response = session_requests.post(
         Constant.url_post_add_ref,
         data=data_dict
